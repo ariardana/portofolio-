@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#03040a",
+  themeColor: "#0a0b0f",
   colorScheme: "dark",
 };
 
@@ -32,11 +32,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="id" className="dark">
-      <body
-        className={`relative min-h-screen overflow-x-hidden ${
-          config.theme.enableScanlines ? "scanlines" : ""
-        } ${config.theme.enableNoise ? "noise" : ""}`}
-      >
+      <body className="relative min-h-screen overflow-x-hidden">
         <Background />
         <Navbar />
         <main className="relative z-10">{children}</main>

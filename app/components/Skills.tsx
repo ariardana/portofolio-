@@ -3,53 +3,30 @@
 import config from "../config";
 import { SectionHeader } from "./About";
 
-const colorMap = {
-  cyan: { from: "from-neon-cyan", text: "text-neon-cyan", shadow: "shadow-neon-cyan" },
-  magenta: {
-    from: "from-neon-magenta",
-    text: "text-neon-magenta",
-    shadow: "shadow-neon-magenta",
-  },
-  yellow: {
-    from: "from-neon-yellow",
-    text: "text-neon-yellow",
-    shadow: "shadow-neon-yellow",
-  },
-  lime: { from: "from-neon-lime", text: "text-neon-lime", shadow: "shadow-neon-lime" },
-  violet: {
-    from: "from-neon-violet",
-    text: "text-neon-violet",
-    shadow: "shadow-neon-violet",
-  },
-} as const;
-
 export default function Skills() {
   return (
-    <section id="skills" className="relative py-24">
-      <div className="container-cyber">
-        <SectionHeader kicker="// 03_skills" title="SKILL_MATRIX.SYS" />
+    <section id="skills" className="section">
+      <div className="container-base">
+        <SectionHeader eyebrow="Skills" title="Keahlian & Teknologi" />
 
-        <div className="mt-10 grid gap-4 sm:grid-cols-2">
-          {config.skills.map((s) => {
-            const c = colorMap[s.color ?? "cyan"];
-            return (
-              <div
-                key={s.name}
-                className="panel panel-hover p-4"
-              >
-                <div className="flex items-baseline justify-between">
-                  <span className={`heading-display text-sm ${c.text}`}>{s.name}</span>
-                  <span className="font-mono text-xs text-slate-400">{s.level}%</span>
-                </div>
-                <div className="mt-3 h-1.5 w-full overflow-hidden rounded-full bg-white/[0.04]">
-                  <div
-                    className={`h-full bg-gradient-to-r ${c.from} via-white/80 to-transparent ${c.shadow}`}
-                    style={{ width: `${Math.min(100, Math.max(0, s.level))}%` }}
-                  />
-                </div>
+        <div className="mt-12 grid gap-3 sm:grid-cols-2">
+          {config.skills.map((s) => (
+            <div key={s.name} className="card card-hover p-5">
+              <div className="flex items-baseline justify-between">
+                <span className="text-sm font-medium text-white">{s.name}</span>
+                <span className="text-xs font-mono text-slate-400">{s.level}%</span>
               </div>
-            );
-          })}
+              {s.category && (
+                <p className="mt-1 text-xs text-slate-500">{s.category}</p>
+              )}
+              <div className="mt-4 h-1.5 w-full overflow-hidden rounded-full bg-bg-elevated">
+                <div
+                  className="h-full rounded-full bg-accent-400"
+                  style={{ width: `${Math.min(100, Math.max(0, s.level))}%` }}
+                />
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>

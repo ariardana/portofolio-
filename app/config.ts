@@ -1,8 +1,8 @@
 /**
  * ============================================================================
- *  CYBERPUNK PORTFOLIO — CONFIG
+ *  PORTFOLIO CONFIG
  * ============================================================================
- *  File ini adalah PUSAT KENDALI portfolio. Edit nilai di bawah untuk
+ *  File ini adalah pusat kendali konten portfolio. Edit nilai di bawah untuk
  *  mengubah konten tanpa perlu menyentuh kode komponen.
  * ============================================================================
  */
@@ -26,8 +26,7 @@ export type SocialLink = {
 export type Skill = {
   name: string;
   level: number; // 0 - 100
-  /** Warna neon (gunakan token tailwind atau hex). */
-  color?: "cyan" | "magenta" | "yellow" | "lime" | "violet";
+  category?: "Frontend" | "Backend" | "Tools" | "Database";
 };
 
 export type ManualProject = {
@@ -37,14 +36,8 @@ export type ManualProject = {
   homepage?: string;
   language?: string;
   topics?: string[];
-  /** Tampilkan badge "FEATURED" di atas card. */
+  /** Tampilkan badge "Featured" di atas card. */
   featured?: boolean;
-};
-
-export type TerminalLine = {
-  prompt?: string;
-  command?: string;
-  output?: string | string[];
 };
 
 export const config = {
@@ -54,12 +47,9 @@ export const config = {
   github: {
     /** Username GitHub yang datanya akan diambil via API. */
     username: "ariardana",
-    /** Maksimum repo yang ditampilkan di section "Projects". */
+    /** Maksimum repo yang ditampilkan di section Projects. */
     maxRepos: 9,
-    /**
-     * Filter repo. Set ke `false` untuk menyembunyikan fork / archived /
-     * repo tanpa deskripsi.
-     */
+    /** Filter repo. */
     showForks: false,
     showArchived: false,
     requireDescription: false,
@@ -69,64 +59,54 @@ export const config = {
    *  PROFIL & META
    *  ====================================================================== */
   site: {
-    title: "ARI ARDANA // CYBER.DEV",
+    title: "Ari Ardana — Fullstack Developer",
     description:
-      "Fullstack developer dari Pacitan — bermain dengan React, Node.js, dan Laravel di rimba neon kode.",
+      "Fullstack developer yang membangun aplikasi web modern dengan React, Node.js, dan Laravel.",
     url: "https://ariardana.dev",
-    /** Locale untuk format tanggal di section profil. */
+    /** Locale untuk format tanggal. */
     locale: "id-ID",
   },
 
   hero: {
-    /** Teks kecil di atas nama. */
-    tagline: "// SYSTEM ONLINE :: WELCOME, RUNNER",
-    /** Nama besar dengan glitch effect (override `name` dari GitHub API). */
-    nameOverride: "ARI ARDANA",
+    /** Eyebrow kecil di atas nama. */
+    eyebrow: "Hi, saya",
+    /** Nama besar (override `name` dari GitHub API). */
+    nameOverride: "Ari Ardana",
+    /** Headline / one-liner di bawah nama. */
+    headline: "Fullstack Developer",
     /**
-     * Daftar role yang akan diketik bergantian di hero.
+     * Daftar role yang akan diketik bergantian sebagai sub-headline.
      * Edit / tambah sesuai keinginan.
      */
     roles: [
-      "FULLSTACK DEVELOPER",
-      "REACT ENGINEER",
-      "NODE.JS HACKER",
-      "LARAVEL ARTISAN",
-      "NEON DREAMER",
+      "React Engineer",
+      "Node.js Developer",
+      "Laravel Developer",
+      "UI / UX Enthusiast",
     ],
-    /**
-     * Output terminal pseudo di hero. Setiap baris bisa berupa command
-     * atau output.
-     */
-    terminal: [
-      { prompt: "root@nightcity:~$", command: "whoami" },
-      { output: "ari_ardana :: fullstack-dev :: in-progress" },
-      { prompt: "root@nightcity:~$", command: "cat ./status.log" },
-      {
-        output: [
-          "[ OK ] react.runtime ............. online",
-          "[ OK ] node.daemon ............... online",
-          "[ OK ] laravel.artisan ........... online",
-          "[..] coffee.supply ............ refilling",
-        ],
-      },
-      { prompt: "root@nightcity:~$", command: "./jack_in.sh" },
-    ] as TerminalLine[],
+    /** Paragraf singkat di hero. */
+    summary:
+      "Saya merancang dan membangun aplikasi web end-to-end — dari antarmuka yang rapi sampai backend yang tangguh. Fokus pada produk yang cepat, mudah dirawat, dan menyenangkan untuk digunakan.",
+    /** Lokasi singkat di hero. */
+    location: "Pacitan, Jawa Timur",
+    /** Status ketersediaan. */
+    availability: "Tersedia untuk proyek freelance",
   },
 
   about: {
     /** Override bio dari GitHub API. Set `null` untuk pakai bio dari API. */
     bioOverride: null as string | null,
-    /** Paragraf tambahan setelah bio. */
-    extraParagraphs: [
-      "Saya membangun aplikasi web dari ujung ke ujung — frontend yang halus, backend yang tangguh, dan pengalaman pengguna yang terasa seperti masuk ke dunia lain.",
-      "Saat ini sedang menyusuri jalur fullstack: React di kanvas, Node.js sebagai mesin, Laravel sebagai pondasi.",
+    /** Paragraf utama di section About. */
+    paragraphs: [
+      "Saya seorang fullstack developer yang berbasis di Pacitan, Jawa Timur. Saya senang menerjemahkan kebutuhan bisnis menjadi produk digital yang rapi, cepat, dan mudah dipakai.",
+      "Sehari-hari saya bekerja dengan React/Next.js di sisi frontend, serta Node.js dan Laravel di sisi backend. Saya juga terbiasa menangani basis data relasional, integrasi API, dan deployment ke berbagai platform modern.",
     ],
-    /** Highlight bullet points. */
+    /** Highlight bullet points (singkat & to the point). */
     highlights: [
       "Berbasis di Pacitan, Jawa Timur",
-      "Fokus pada produk web modern",
-      "Suka eksplorasi tooling baru",
-      "Open untuk kolaborasi & freelance",
+      "Pengalaman membangun aplikasi web end-to-end",
+      "Terbiasa bekerja remote & kolaborasi tim",
+      "Terbuka untuk peluang kerja & freelance",
     ],
   },
 
@@ -134,12 +114,12 @@ export const config = {
    *  SKILLS
    *  ====================================================================== */
   skills: [
-    { name: "TypeScript", level: 88, color: "cyan" },
-    { name: "React / Next.js", level: 92, color: "magenta" },
-    { name: "Node.js", level: 84, color: "lime" },
-    { name: "Laravel / PHP", level: 80, color: "yellow" },
-    { name: "Tailwind CSS", level: 95, color: "cyan" },
-    { name: "PostgreSQL / MySQL", level: 78, color: "violet" },
+    { name: "TypeScript", level: 88, category: "Frontend" },
+    { name: "React / Next.js", level: 92, category: "Frontend" },
+    { name: "Tailwind CSS", level: 95, category: "Frontend" },
+    { name: "Node.js", level: 84, category: "Backend" },
+    { name: "Laravel / PHP", level: 80, category: "Backend" },
+    { name: "PostgreSQL / MySQL", level: 78, category: "Database" },
   ] as Skill[],
 
   /** ========================================================================
@@ -148,10 +128,7 @@ export const config = {
   projects: {
     /** Nama repo yang ingin di-pin di urutan teratas (case-insensitive). */
     pinned: ["Azusa-Downloader", "IslamApp", "Chatbot-AI", "desa"],
-    /**
-     * Project tambahan yang TIDAK ada di GitHub (mis. closed-source).
-     * Akan digabung dengan repo dari API.
-     */
+    /** Project tambahan yang TIDAK ada di GitHub. */
     manual: [] as ManualProject[],
   },
 
@@ -160,7 +137,12 @@ export const config = {
    *  ====================================================================== */
   contact: {
     email: "ariardana192@gmail.com",
-    /** Link sosmed. Tinggal hapus / tambah sesuai kebutuhan. */
+    /** Headline section contact. */
+    headline: "Mari berkolaborasi",
+    /** Pesan singkat di section contact. */
+    message:
+      "Punya ide proyek atau ingin berdiskusi soal pengembangan web? Saya akan dengan senang hati mendengar cerita Anda dan biasanya membalas dalam 24 jam.",
+    /** Link sosmed. */
     socials: [
       {
         label: "GitHub",
@@ -183,22 +165,6 @@ export const config = {
         icon: "Globe",
       },
     ] as SocialLink[],
-  },
-
-  /** ========================================================================
-   *  THEME
-   *  ====================================================================== */
-  theme: {
-    /** Warna neon utama. Diaplikasikan ke aksen, tombol, dan glow. */
-    primary: "cyan", // cyan | magenta | yellow | lime | violet
-    secondary: "magenta",
-    /**
-     * Aktifkan efek visual berat. Matikan jika butuh performa di device lemah.
-     */
-    enableScanlines: true,
-    enableGrid: true,
-    enableNoise: true,
-    enableGlitch: true,
   },
 } as const;
 
