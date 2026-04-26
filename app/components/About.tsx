@@ -4,6 +4,7 @@ import Image from "next/image";
 import { Calendar, Check, Globe, MapPin, Twitter, Users } from "lucide-react";
 import config from "../config";
 import type { GitHubUser } from "../lib/github";
+import Reveal, { Stagger, StaggerItem } from "./Reveal";
 
 type Props = { user: GitHubUser | null; loading?: boolean };
 
@@ -18,10 +19,12 @@ export default function About({ user, loading }: Props) {
   return (
     <section id="about" className="section">
       <div className="container-base">
-        <SectionHeader eyebrow="About" title="Tentang Saya" />
+        <Reveal>
+          <SectionHeader eyebrow="About" title="Tentang Saya" />
+        </Reveal>
 
-        <div className="mt-12 grid gap-10 lg:grid-cols-12">
-          <div className="lg:col-span-4">
+        <div className="mt-10 sm:mt-12 grid gap-8 sm:gap-10 lg:grid-cols-12">
+          <Reveal className="lg:col-span-4" delay={0.05}>
             <div className="card overflow-hidden">
               <div className="relative aspect-square">
                 {user?.avatar_url ? (
@@ -59,7 +62,9 @@ export default function About({ user, loading }: Props) {
                   <InfoRow
                     icon={<Globe className="h-4 w-4" />}
                     label={user.blog}
-                    href={user.blog.startsWith("http") ? user.blog : `https://${user.blog}`}
+                    href={
+                      user.blog.startsWith("http") ? user.blog : `https://${user.blog}`
+                    }
                   />
                 )}
                 {user?.twitter_username && (
@@ -71,28 +76,28 @@ export default function About({ user, loading }: Props) {
                 )}
               </div>
             </div>
-          </div>
+          </Reveal>
 
           <div className="lg:col-span-8">
-            <div className="space-y-5">
+            <Stagger className="space-y-5">
               {config.about.paragraphs.map((p, i) => (
-                <p key={i} className="text-base leading-relaxed text-slate-300">
-                  {p}
-                </p>
+                <StaggerItem key={i}>
+                  <p className="text-base leading-relaxed text-slate-300">{p}</p>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
 
-            <div className="mt-8 grid gap-3 sm:grid-cols-2">
+            <Stagger className="mt-8 grid gap-3 sm:grid-cols-2">
               {config.about.highlights.map((h) => (
-                <div
+                <StaggerItem
                   key={h}
                   className="flex items-start gap-3 rounded-lg border border-border bg-bg-surface px-4 py-3 text-sm text-slate-200"
                 >
                   <Check className="mt-0.5 h-4 w-4 shrink-0 text-accent-300" />
                   <span>{h}</span>
-                </div>
+                </StaggerItem>
               ))}
-            </div>
+            </Stagger>
           </div>
         </div>
       </div>
@@ -130,7 +135,13 @@ function InfoRow({
   return <div className="block px-2 py-1.5">{inner}</div>;
 }
 
-export function SectionHeader({ eyebrow, title }: { eyebrow: string; title: string }) {
+export function SectionHeader({
+  eyebrow,
+  title,
+}: {
+  eyebrow: string;
+  title: string;
+}) {
   return (
     <div>
       <p className="section-eyebrow">{eyebrow}</p>

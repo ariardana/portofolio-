@@ -1,9 +1,11 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ExternalLink, GitFork, Github, Pin, Star } from "lucide-react";
 import config from "../config";
 import { LANG_COLORS, type GitHubRepo } from "../lib/github";
 import { SectionHeader } from "./About";
+import Reveal, { Stagger, StaggerItem } from "./Reveal";
 
 type ProjectCard = {
   id: string;
@@ -57,24 +59,31 @@ export default function Projects({ repos, loading }: Props) {
   return (
     <section id="projects" className="section">
       <div className="container-base">
-        <SectionHeader eyebrow="Projects" title="Proyek Terbaru" />
+        <Reveal>
+          <SectionHeader eyebrow="Projects" title="Proyek Terbaru" />
+        </Reveal>
 
         {loading ? (
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-10 sm:mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 6 }).map((_, i) => (
               <SkeletonCard key={i} />
             ))}
           </div>
         ) : cards.length === 0 ? (
-          <div className="card mt-12 p-10 text-center text-slate-400">
+          <div className="card mt-10 sm:mt-12 p-10 text-center text-slate-400">
             Belum ada proyek untuk ditampilkan.
           </div>
         ) : (
-          <div className="mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Stagger
+            className="mt-10 sm:mt-12 grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+            stagger={0.06}
+          >
             {cards.map((p) => (
-              <RepoCard key={p.id} project={p} />
+              <StaggerItem as="article" key={p.id}>
+                <RepoCard project={p} />
+              </StaggerItem>
             ))}
-          </div>
+          </Stagger>
         )}
       </div>
     </section>
@@ -95,15 +104,24 @@ function SkeletonCard() {
 }
 
 function RepoCard({ project: p }: { project: ProjectCard }) {
-  const langColor = p.language ? LANG_COLORS[p.language] ?? "#888" : "#555";
+  const langColor = p.language ? (LANG_COLORS[p.language] ?? "#888") : "#555";
 
   return (
-    <article className="card card-hover group flex h-full flex-col p-5">
+    <motion.div
+      className="card card-hover group relative flex h-full flex-col overflow-hidden p-5"
+      whileHover={{ y: -3 }}
+      transition={{ type: "spring", stiffness: 280, damping: 24 }}
+    >
+      <span
+        aria-hidden
+        className="pointer-events-none absolute -right-10 -top-10 h-32 w-32 rounded-full bg-accent-400/0 blur-2xl transition-all duration-500 group-hover:bg-accent-400/15"
+      />
+
       <div className="flex items-start justify-between gap-3">
         <h3 className="text-base font-semibold text-white transition-colors group-hover:text-accent-300">
           {p.name}
         </h3>
-        <div className="flex items-center gap-1.5">
+        <div className="flex shrink-0 items-center gap-1.5">
           {p.pinned && (
             <span className="inline-flex items-center gap-1 rounded-md bg-accent-400/10 px-2 py-0.5 text-[10px] font-medium uppercase tracking-wide text-accent-300">
               <Pin className="h-3 w-3" /> Pinned
@@ -132,20 +150,20 @@ function RepoCard({ project: p }: { project: ProjectCard }) {
       )}
 
       <div className="mt-auto flex items-center justify-between border-t border-border pt-4">
-        <div className="flex items-center gap-4 text-xs text-slate-400">
+        <div className="flex items-center gap-3 sm:gap-4 text-xs text-slate-400">
           {p.language && (
             <span className="flex items-center gap-1.5">
               <span
                 className="inline-block h-2.5 w-2.5 rounded-full"
                 style={{ background: langColor }}
               />
-              {p.language}
+              <span className="hidden xs:inline">{p.language}</span>
             </span>
           )}
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-1 tabular-nums">
             <Star className="h-3 w-3" /> {p.stars}
           </span>
-          <span className="flex items-center gap-1">
+          <span className="flex items-center gap-1 tabular-nums">
             <GitFork className="h-3 w-3" /> {p.forks}
           </span>
         </div>
@@ -173,6 +191,6 @@ function RepoCard({ project: p }: { project: ProjectCard }) {
           )}
         </div>
       </div>
-    </article>
+    </motion.div>
   );
 }

@@ -2,6 +2,8 @@
 
 import { Boxes, GitFork, Star, Users } from "lucide-react";
 import type { GitHubRepo, GitHubUser } from "../lib/github";
+import AnimatedCounter from "./AnimatedCounter";
+import { Stagger, StaggerItem } from "./Reveal";
 
 type Props = {
   user: GitHubUser | null;
@@ -23,24 +25,24 @@ export default function Stats({ user, repos, loading }: Props) {
   return (
     <section className="relative">
       <div className="container-base">
-        <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+        <Stagger className="grid gap-3 grid-cols-2 sm:grid-cols-4">
           {items.map((it) => {
             const Icon = it.icon;
             return (
-              <div key={it.label} className="card card-hover p-5">
+              <StaggerItem key={it.label} className="card card-hover p-4 sm:p-5">
                 <div className="flex items-center justify-between">
-                  <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
+                  <span className="text-[11px] sm:text-xs font-medium uppercase tracking-wider text-slate-400">
                     {it.label}
                   </span>
                   <Icon className="h-4 w-4 text-slate-500" />
                 </div>
-                <div className="mt-3 text-3xl font-semibold tracking-tight text-white">
-                  {loading ? "—" : it.value}
+                <div className="mt-3 text-2xl sm:text-3xl font-semibold tracking-tight text-white tabular-nums">
+                  {loading ? "—" : <AnimatedCounter value={it.value} />}
                 </div>
-              </div>
+              </StaggerItem>
             );
           })}
-        </div>
+        </Stagger>
       </div>
     </section>
   );
