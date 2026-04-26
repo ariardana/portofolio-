@@ -1,6 +1,7 @@
 "use client";
 
 import {
+  ArrowUpRight,
   Github,
   Globe,
   Instagram,
@@ -28,34 +29,26 @@ const ICONS: Record<SocialLink["icon"], React.ComponentType<{ className?: string
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative py-24">
-      <div className="container-cyber">
-        <SectionHeader kicker="// 05_contact" title="OPEN_A_CHANNEL" />
+    <section id="contact" className="section">
+      <div className="container-base">
+        <SectionHeader eyebrow="Contact" title={config.contact.headline} />
 
-        <div className="mt-10 grid gap-6 lg:grid-cols-12">
-          <div className="panel p-6 sm:p-8 lg:col-span-7">
-            <p className="font-mono text-xs uppercase tracking-[0.3em] text-neon-magenta">
-              /// secure_line
-            </p>
-            <h3 className="mt-2 heading-display text-2xl text-white sm:text-3xl">
-              Let&apos;s build something <span className="text-glow-cyan">neon</span>.
-            </h3>
-            <p className="mt-3 text-slate-300/90">
-              Punya ide proyek, ingin kolaborasi, atau sekedar ngobrol soal kode?
-              Kirim sinyal lewat salah satu kanal di samping. Saya biasanya
-              merespons dalam 24 jam.
+        <div className="mt-12 grid gap-6 lg:grid-cols-12">
+          <div className="card p-6 sm:p-8 lg:col-span-7">
+            <p className="text-base leading-relaxed text-slate-300">
+              {config.contact.message}
             </p>
 
             <a
               href={`mailto:${config.contact.email}`}
-              className="btn-neon mt-6"
+              className="btn btn-primary mt-6"
             >
               <Mail className="h-4 w-4" />
               {config.contact.email}
             </a>
           </div>
 
-          <div className="grid gap-3 lg:col-span-5">
+          <div className="grid gap-2 lg:col-span-5">
             {config.contact.socials.map((s) => {
               const Icon = ICONS[s.icon] ?? Globe;
               return (
@@ -64,17 +57,17 @@ export default function Contact() {
                   href={s.url}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="panel panel-hover flex items-center justify-between p-4"
+                  className="card card-hover group flex items-center justify-between p-4"
                 >
                   <span className="flex items-center gap-3">
-                    <span className="grid h-9 w-9 place-items-center border border-neon-cyan/40 bg-neon-cyan/[0.06] text-neon-cyan">
+                    <span className="grid h-9 w-9 place-items-center rounded-md border border-border bg-bg-elevated text-slate-300 group-hover:text-accent-300">
                       <Icon className="h-4 w-4" />
                     </span>
-                    <span className="heading-display text-sm text-white">{s.label}</span>
+                    <span className="text-sm font-medium text-white">
+                      {s.label}
+                    </span>
                   </span>
-                  <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-slate-400 group-hover:text-neon-cyan">
-                    OPEN ↗
-                  </span>
+                  <ArrowUpRight className="h-4 w-4 text-slate-500 transition-colors group-hover:text-white" />
                 </a>
               );
             })}

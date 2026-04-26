@@ -14,48 +14,28 @@ export default function Stats({ user, repos, loading }: Props) {
   const totalForks = repos.reduce((acc, r) => acc + r.forks_count, 0);
 
   const items = [
-    {
-      label: "Public Repos",
-      value: user?.public_repos ?? repos.length,
-      icon: Boxes,
-      color: "text-neon-cyan",
-    },
-    {
-      label: "Total Stars",
-      value: totalStars,
-      icon: Star,
-      color: "text-neon-yellow",
-    },
-    {
-      label: "Total Forks",
-      value: totalForks,
-      icon: GitFork,
-      color: "text-neon-magenta",
-    },
-    {
-      label: "Followers",
-      value: user?.followers ?? 0,
-      icon: Users,
-      color: "text-neon-violet",
-    },
+    { label: "Public Repos", value: user?.public_repos ?? repos.length, icon: Boxes },
+    { label: "Total Stars", value: totalStars, icon: Star },
+    { label: "Total Forks", value: totalForks, icon: GitFork },
+    { label: "Followers", value: user?.followers ?? 0, icon: Users },
   ];
 
   return (
-    <section className="relative py-10">
-      <div className="container-cyber">
+    <section className="relative">
+      <div className="container-base">
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           {items.map((it) => {
             const Icon = it.icon;
             return (
-              <div key={it.label} className="panel panel-hover p-5">
+              <div key={it.label} className="card card-hover p-5">
                 <div className="flex items-center justify-between">
-                  <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-slate-400">
+                  <span className="text-xs font-medium uppercase tracking-wider text-slate-400">
                     {it.label}
                   </span>
-                  <Icon className={`h-4 w-4 ${it.color}`} />
+                  <Icon className="h-4 w-4 text-slate-500" />
                 </div>
-                <div className={`mt-3 font-display text-3xl ${it.color}`}>
-                  {loading ? "--" : String(it.value).padStart(2, "0")}
+                <div className="mt-3 text-3xl font-semibold tracking-tight text-white">
+                  {loading ? "—" : it.value}
                 </div>
               </div>
             );
